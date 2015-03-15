@@ -3,8 +3,11 @@ require'database.php';
 require_once'functions_main.php';
 include'coins.php';
 
+$max_coins = $my_coins->getMaxCoins();
+$coins_string = $my_coins->getCoinsString();
+$coins_counts_string = $my_coins->getCoinsCountsString();
 $server_url = get_exchange_url();      // url to the exchange
-$script_title = "[zelles/Werris] Bitcoin Exchange";  // title of the exchange
+$script_title = "[zelles/Werris(Bitcrystal)] Bitcoin Exchange";  // title of the exchange
 
 $CSS_Stylesheet = '<link rel="stylesheet" type="text/css" href="stylesheet.css">';  // a global style sheet
 $ip = $_SERVER['REMOTE_ADDR'];
@@ -76,19 +79,21 @@ if(!$user_session) {
 		}
 	}
 		$i=$i*3;
-	    if($i<10)
+	    if($i<$max_coins)
 			$string = $string . ",";
-		for(;$i<10;$i++)
+		for(;$i<$max_coins;$i++)
 		{
 			$string = $string . "'0'";
-			if($i+1<10)
+			if($i+1<$max_coins)
 				$string = $string .",";
 		}
 		$SQL = "SELECT * FROM balances WHERE username='$user_session' and trade_id = '".$my_coins->getTradeIdAccount()."'";
 		$result = mysql_query($SQL);
 		$num_rows = mysql_num_rows($result);
+		$sqlquery="INSERT INTO balances (id,username".$coins_string.",trade_id) VALUES ('','$user_session',".$coins_counts_string.",'".$my_coins->getTradeIdAccount()."')";
+		//echo $sqlquery."<br/>";
 		if($num_rows!=1) {
-			if(!mysql_query("INSERT INTO balances (id,username,coin1,coin2,coin3,coin4,coin5,coin6,coin7,coin8,coin9,coin10,trade_id) VALUES ('','$user_session','0','0','0','0','0','0','0','0','0','0','".$my_coins->getTradeIdAccount()."')")) {
+			if(!mysql_query($sqlquery)) {
 				die("Server error");
 			} else {
 				$r_system_action = "success";
@@ -96,9 +101,11 @@ if(!$user_session) {
 		}
 		$SQL = "SELECT * FROM addresses WHERE username='$user_session' and trade_id = '".$my_coins->getTradeIdAccount()."'";
 		$result = mysql_query($SQL);
+		$sqlquery="INSERT INTO addresses (id,username,".$coins_string.",trade_id) VALUES ('','$user_session',".$string.",'".$my_coins->getTradeIdAccount()."')";
+		//echo $sqlquery."<br/>";
 		$num_rows = mysql_num_rows($result);
 		if($num_rows!=1) {
-			if(!mysql_query("INSERT INTO addresses (id,username,coin1,coin2,coin3,coin4,coin5,coin6,coin7,coin8,coin9,coin10,trade_id) VALUES ('','$user_session',".$string.",'".$my_coins->getTradeIdAccount()."')")) {
+			if(!mysql_query($sqlquery)) {
 				die("Server error");
 			} else {
 				$r_system_action = "success";

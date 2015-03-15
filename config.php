@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+error_reporting(E_ALL);
 require'database.php';
 
 // this file is to update online status and log if guest user or bot also log location

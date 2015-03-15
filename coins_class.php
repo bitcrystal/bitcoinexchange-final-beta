@@ -24,6 +24,7 @@ class w_coins {
 	private $select_instance_id;
 	private $w_coins_settings = array();
 	private static $SINGLETON = NULL;
+	private $max_coins;
 	
 	private function initCoins($add_coins) {
 		//The amount of coins you are add must dividable through 3
@@ -44,6 +45,7 @@ class w_coins {
 	}
 	
 	private function __construct($add_coins = false, $init_feebee_account = false) {
+		$this->max_coins = 100;
 		$this->my_all_coins=my_all_coins::get();
 		if($add_coins!=false)
 		{
@@ -243,6 +245,81 @@ class w_coins {
 		$this->my_w = $this->w_coins_settings[0];
 		$this->enabled_coins_count = count($this->enabled_coins);
 		$this->enable_default_coins();
+	}
+	
+	public function getMaxCoins()
+	{
+		return $this->max_coins;
+	}
+	
+	public function getCoinsString()
+	{
+		$coin = "coin";
+		$coin_string = "";
+		for($i = 0; $i < $this->max_coins; $i++)
+		{
+			if($i!=0)
+			{
+				$coin_string=$coin_string . ",";
+			}
+			$j = $i + 1;
+			$coin_string=$coin_string . "coin".$j;
+		}
+		return $coin_string;
+	}
+	
+	public function getCoinsStringInput($input="coin")
+	{
+		$coin = "coin";
+		$coin_string = "";
+		for($i = 0; $i < $this->max_coins; $i++)
+		{
+			if($i!=0)
+			{
+				$coin_string=$coin_string . ",";
+			}
+			$j = $i + 1;
+			$coin_string=$coin_string . $input.$j;
+		}
+		return $coin_string;
+	}
+	
+	public function getCoinsCountsString()
+	{
+		$counts_string = "";
+		for($i = 0; $i < $this->max_coins; $i++)
+		{
+			if($i!=0)
+			{
+				$counts_string = $counts_string . ",";
+			}
+			$counts_string = $counts_string . "'0'";
+			
+		}
+		return $counts_string;
+	}
+	
+	public function getCoinsCountsStringSlots($slots)
+	{
+		if(!is_array($slots) || count($slots)!=$this->max_coins)
+		{
+			$slots = array();
+			for($i = 0; $i < $this->max_coins; $i++)
+			{
+				$slots[$i]="'0'";
+			}
+		}
+		$counts_string = "";
+		for($i = 0; $i < $this->max_coins; $i++)
+		{
+			if($i!=0)
+			{
+				$counts_string = $counts_string . ",";
+			}
+			$counts_string = $counts_string . $slots[$i];
+			
+		}
+		return $counts_string;
 	}
 	
 	public function set_current_from_trade_coin_prefix_and_name($prefix, $name)
