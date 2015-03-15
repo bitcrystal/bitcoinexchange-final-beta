@@ -13,8 +13,8 @@ $CSS_Stylesheet = '<link rel="stylesheet" type="text/css" href="stylesheet.css">
 $ip = $_SERVER['REMOTE_ADDR'];
 $date = date("n/j/Y g:i a");;
 
-$db_handle = mysql_connect($dbdb_host,$dbdb_user,$dbdb_pass)or die("Server error.");
-$db_found = mysql_select_db($dbdb_database)or die("Server error.");
+$db_handle = mysql_connect($dbdb_host,$dbdb_user,$dbdb_pass)or die("Server error mysql connection.");
+$db_found = mysql_select_db($dbdb_database)or die("Server error mysql select db.");
 
 //echo $my_coins->coins_names_prefix[2];
 $coin_selected = $my_coins->coinSelecter($_SESSION['trade_coin']);
@@ -90,11 +90,12 @@ if(!$user_session) {
 		$SQL = "SELECT * FROM balances WHERE username='$user_session' and trade_id = '".$my_coins->getTradeIdAccount()."'";
 		$result = mysql_query($SQL);
 		$num_rows = mysql_num_rows($result);
-		$sqlquery="INSERT INTO balances (id,username".$coins_string.",trade_id) VALUES ('','$user_session',".$coins_counts_string.",'".$my_coins->getTradeIdAccount()."')";
+		$sqlquery="INSERT INTO balances (id,username,".$coins_string.",trade_id) VALUES ('','$user_session',".$coins_counts_string.",'".$my_coins->getTradeIdAccount()."')";
 		//echo $sqlquery."<br/>";
 		if($num_rows!=1) {
 			if(!mysql_query($sqlquery)) {
-				die("Server error");
+				echo $sqlquery."<br/>";
+				die("Server error mysql insert into balances!");
 			} else {
 				$r_system_action = "success";
 			}
@@ -106,7 +107,8 @@ if(!$user_session) {
 		$num_rows = mysql_num_rows($result);
 		if($num_rows!=1) {
 			if(!mysql_query($sqlquery)) {
-				die("Server error");
+				echo $sqlquery."<br/>";
+				die("Server error mysql insert into addresses!");
 			} else {
 				$r_system_action = "success";
 			}
