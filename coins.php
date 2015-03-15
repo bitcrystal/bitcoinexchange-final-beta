@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL);
 require_once('coins_class.php');
 $my_coins_names="";
 $init_feebee_account="";
