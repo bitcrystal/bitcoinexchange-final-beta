@@ -614,9 +614,10 @@ class w_coins {
 					$iid = '&iid=' . $this->getId($i);
 				else
 					$iid = "";*/
+			
 			echo "<li style='float:left;width:auto;paddin-left:0;list-style-type:none;'><div class=\"coin-button\"><a href=\"".$website."?c=".$this->coins_names_prefix[0+$i]."_".$this->coins_names_prefix[1+$i].$iid."\" class=\"coin-link\">".$this->coins_names_prefix[1+$i]."/".$this->coins_names_prefix[0+$i]."</a></div></li>";
-            echo "<li style='float:left;width:auto;paddin-left:0';list-style-type:none;><div class=\"coin-button\"><a href=\"".$website."?c=".$this->coins_names_prefix[2+$i]."_".$this->coins_names_prefix[1+$i].$iid."\" class=\"coin-link\">".$this->coins_names_prefix[1+$i]."/".$this->coins_names_prefix[2+$i]."</a></div></li>";
-            //echo "<li style=\"padding-left: ".$set."px;\"><div class=\"coin-button\"><a href=\"".$website."?c=".$this->coins_names_prefix[2+$i]."_".$this->coins_names_prefix[1+$i].$iid."\" class=\"coin-link\">".$this->coins_names_prefix[1+$i]."/".$this->coins_names_prefix[2+$i]."</a></div></li>";
+			echo "<li style='float:left;width:auto;paddin-left:0;list-style-type:none;'><div class=\"coin-button\"><a href=\"".$website."?c=".$this->coins_names_prefix[2+$i]."_".$this->coins_names_prefix[1+$i].$iid."\" class=\"coin-link\">".$this->coins_names_prefix[1+$i]."/".$this->coins_names_prefix[2+$i]."</a></div></li>";
+			//echo "<li style=\"padding-left: ".$set."px;\"><div class=\"coin-button\"><a href=\"".$website."?c=".$this->coins_names_prefix[2+$i]."_".$this->coins_names_prefix[1+$i].$iid."\" class=\"coin-link\">".$this->coins_names_prefix[1+$i]."/".$this->coins_names_prefix[2+$i]."</a></div></li>";
 		}
 	}
 	
@@ -785,8 +786,12 @@ class w_coins {
 		$iid = "";
 		for($i=0;$i < $this->coins_count; $i+=3)
 		{
-			if($i!=0)
+			if($i%12==0)
+			{
+				echo"<br></br>";
+			} else if($i!=0) {
 				echo', ';
+			}
 			/*if(floor($i/3)>0)
 					$iid = '&iid=' . $this->getId($i);
 				else

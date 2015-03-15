@@ -384,7 +384,7 @@ if($Trade_Message)
    
    <table style="width: 100%;">
       <tr>
-       <div style="padding-left:5px;"><ul style="list-style-type:none;display:initial;">
+       <div style="padding-left:07%; width: 100%;"><ul style="list-style-type:center;display:initial;">
    
             <?php $my_coins->outputCoinButtonLinks(); ?>
    
